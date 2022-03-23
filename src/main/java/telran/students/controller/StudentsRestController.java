@@ -1,17 +1,20 @@
 package telran.students.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import telran.students.dto.QueryDto;
-import telran.students.dto.QueryType;
-import telran.students.dto.Student;
+import telran.students.dto.*;
 import telran.students.service.interfaces.*;
 import java.util.*;
 
 @RestController
 @RequestMapping("/students")
 public class StudentsRestController {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handleException(Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 
     StudentService studentService;
 
@@ -30,23 +33,28 @@ public class StudentsRestController {
         return nStudents == 0 ? studentService.getBestStudents() : studentService.getTopBestStudents(nStudents);
     }
 
+    @GetMapping("/best/subject")
+    public List<StudentDto> getBestStudentsSubject(@RequestParam(name="amount") int nStudents, String subject ) {
+        return studentService.getTopBestStudentsBySubject(nStudents, subject);
+    }
+
     @PostMapping("/query")
     public List<String> getQueryResult(@RequestBody QueryDto queryDto) {
-        return queryDto.type == QueryType.JPQL ? studentService.jpqlQuery(queryDto.query) :
+        return queryDto.type == QueryTypeDto.JPQL ? studentService.jpqlQuery(queryDto.query) :
                 studentService.nativeQuery(queryDto.query);
     }
 
     @GetMapping("/worst/marks")
-    public List<StudentSubjectMark> getMarksOfWorstStudents(@RequestParam ("amount")int nStudents) {
+    public List<StudentSubjectMark> getMarksOfWorstStudents(@RequestParam ("amount") int nStudents) {
         return studentService.getMarksOfWorstStudents(nStudents);
     }
     @GetMapping("/distribution/marks")
-    public List<IntervalMarks> getMarksDistribution(int interval) {
+    public List<IntervalMarks> getMarksDistribution(@RequestParam ("interval")int interval) {
         return studentService.marksDistribution(interval);
     }
 
     @DeleteMapping("/delete")
-    public List<Student> delete(@RequestParam("avgMark") int avgMark, @RequestParam("nMarks") int nMarks) {
+    public List<StudentDto> delete(@RequestParam("avgMark") int avgMark, @RequestParam("nMarks") int nMarks) {
         return studentService.removeStudents(avgMark, nMarks);
     }
 

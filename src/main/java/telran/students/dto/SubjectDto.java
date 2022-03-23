@@ -1,14 +1,14 @@
 package telran.students.dto;
 
-public class Subject {
+public class SubjectDto {
 
     public int suid;
     public String subject;
 
-    public Subject() {
+    public SubjectDto() {
     }
 
-    public Subject(int suid, String subject) {
+    public SubjectDto(int suid, String subject) {
         this.suid = suid;
         this.subject = subject;
     }

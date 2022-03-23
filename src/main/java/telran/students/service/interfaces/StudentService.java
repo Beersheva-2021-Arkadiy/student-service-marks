@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface StudentService {
 
-    void addStudent(Student student);
-    void addSubject(Subject subject);
-    Mark addMark(Mark mark);
+    void addStudent(StudentDto studentDto);
+    void addSubject(SubjectDto subjectDto);
+    MarkDto addMark(MarkDto markDto);
 
     List<StudentSubjectMark> getMarksStudentBySubject(String name, String subject);
     List<String> getBestStudents();
     List<String> getTopBestStudents(int nStudents);
-    List<Student> getTopBestStudentsBySubject(int nStudents, String subject);
+    List<StudentDto> getTopBestStudentsBySubject(int nStudents, String subject);
     List<StudentSubjectMark> getMarksOfWorstStudents(int nStudents);
     List<IntervalMarks> marksDistribution(int interval);
     List<String> jpqlQuery(String jpql);
     List<String> nativeQuery(String sql);
-    List<Student> removeStudents(int avgMark, int nMarks);
+    List<StudentDto> removeStudents(int avgMark, int nMarks);
 
 }

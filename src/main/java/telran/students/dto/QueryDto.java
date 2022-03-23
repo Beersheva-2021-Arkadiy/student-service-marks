@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 public class QueryDto {
 
     @NotNull
-    public QueryType type;
+    public QueryTypeDto type;
     @NotNull
     public String query;
 

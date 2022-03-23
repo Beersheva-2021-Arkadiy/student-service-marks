@@ -1,15 +1,15 @@
 package telran.students.dto;
 
-public class Mark {
+public class MarkDto {
 
     public int stid;
     public int suid;
     public int value;
 
-    public Mark() {
+    public MarkDto() {
     }
 
-    public Mark(int stid, int suid, int value) {
+    public MarkDto(int stid, int suid, int value) {
         this.stid = stid;
         this.suid = suid;
         this.value = value;

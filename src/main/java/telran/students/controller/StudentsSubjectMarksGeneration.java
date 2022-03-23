@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import telran.students.dto.*;
 import telran.students.service.interfaces.StudentService;
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -38,14 +37,14 @@ public class StudentsSubjectMarksGeneration {
     private void addStudents() {
         IntStream.range(0, names.length)
                 .forEach(index -> {
-                    studentService.addStudent(new Student(index + 1, names[index]));
+                    studentService.addStudent(new StudentDto(index + 1, names[index]));
                 });
     }
 
     private void addSubjects() {
         IntStream.range(0, subjects.length)
                 .forEach(index -> {
-                    studentService.addSubject(new Subject(index + 1, subjects[index]));
+                    studentService.addSubject(new SubjectDto(index + 1, subjects[index]));
                 });
     }
 
@@ -57,7 +56,7 @@ public class StudentsSubjectMarksGeneration {
         int studentId = getRandomNumber(1, names.length);
         int subjectId = getRandomNumber(1, subjects.length);
         int mark = getRandomNumber(60, 100);
-        studentService.addMark(new Mark(studentId, subjectId, mark));
+        studentService.addMark(new MarkDto(studentId, subjectId, mark));
     }
 
     private int getRandomNumber(int min, int max) {
